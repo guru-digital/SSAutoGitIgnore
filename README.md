@@ -7,6 +7,6 @@ A Composer post-update-cmd script to automatically add Composer managed SilverSt
 ### Add the following to your composer.json
 ```
 "scripts": {
-     "post-update-cmd": "gdmedia\\SSAutoGitIgnore\\UpdateScript::Go"
+     "post-update-cmd": "GDM\\SSAutoGitIgnore\\UpdateScript::Go"
 }
 ```
