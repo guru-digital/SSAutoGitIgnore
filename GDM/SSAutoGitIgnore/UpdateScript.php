@@ -1,6 +1,6 @@
 <?php
 
-namespace gdmedia\SSAutoGitIgnore;
+namespace GDM\SSAutoGitIgnore;
 
 use Composer\Script\Event;
 
