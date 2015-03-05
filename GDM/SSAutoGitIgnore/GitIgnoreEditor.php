@@ -121,7 +121,6 @@ class GitIgnoreEditor {
         // If autoLines is empty, this is the first time we are auto adding to this gitinore.
         // So just add the markers
         if (empty($this->autoLines)) {
-            echo "Auto add " . $this->readLines[$this->endIndex] . PHP_EOL;
             // Add an empy line above the marker, unless its on the first line or already had one
             if ($this->startIndex !== 0 && !empty($this->readLines[$this->endIndex])) {
                 $this->autoLines[] = PHP_EOL;
