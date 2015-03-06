@@ -90,12 +90,12 @@ class GitIgnoreEditor {
     public function parse() {
         $this->readLines = file($this->filePath, FILE_IGNORE_NEW_LINES);
         if (in_array($this->startMarker, $this->readLines) && !in_array($this->endMarker, $this->readLines)) {
-            throw new AutoGitIgnoreParseException("Found start marker on line " . ($this->startIndex + 1) . " without an end marker. Please manually edit " . $this->filePath);
+            throw new AutoGitIgnoreParseException("Found start marker on line " . ($this->findStartIndex() + 1) . " without an end marker. Please manually edit " . $this->filePath);
         } else if (in_array($this->endMarker, $this->readLines) && !in_array($this->startMarker, $this->readLines)) {
-            throw new AutoGitIgnoreParseException("Found end marker on line " . ($this->endIndex + 1) . " without a start marker. Please manually edit " . $this->filePath);
+            throw new AutoGitIgnoreParseException("Found end marker on line " . ( $this->findEndIndex() + 1) . " without a start marker. Please manually edit " . $this->filePath);
         }
-        $this->startIndex = array_search($this->startMarker, $this->readLines);
-        $this->endIndex   = array_search($this->endMarker, $this->readLines);
+        $this->startIndex = $this->findStartIndex();
+        $this->endIndex   = $this->findEndIndex();
         if ($this->endIndex < $this->startIndex) {
             throw new AutoGitIgnoreParseException("End marker found on line " . ($this->endIndex + 1) . " before start maker on line " . ($this->startIndex + 1) . ". Please manually edit " . $this->filePath);
         }
@@ -167,6 +167,34 @@ class GitIgnoreEditor {
             }
         }
         return $this;
+    }
+
+    /**
+     * Find the index in the readLines array containg the value of $line
+     *
+     * @param string $line the line to search for
+     * @return int
+     */
+    public function findLine($line) {
+        return array_search($line, $this->readLines);
+    }
+
+    /**
+     * Find the index in the readLines array containg the start marker
+     *
+     * @return int
+     */
+    public function findStartIndex() {
+        return $this->findLine($this->startMarker);
+    }
+
+    /**
+     * Find the index in the readLines array containg the end marker
+     *
+     * @return int
+     */
+    public function findEndIndex() {
+        return $this->findLine($this->endMarker);
     }
 
     /**
