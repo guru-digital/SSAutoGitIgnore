@@ -12,7 +12,7 @@ class UpdateScript {
         $packageInfo = new SSPackageInfo($event->getComposer());
         $ignores     = array();
         foreach ($packageInfo->GetSSModules() as $value) {
-            $ignores[] = "/" . $value["path"] . "/";
+            $ignores[] = "/" . $value["path"] ;//. "/";
         }
         sort($ignores);
 
