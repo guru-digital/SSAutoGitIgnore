@@ -14,6 +14,7 @@ class UpdateScript {
         foreach ($packageInfo->GetSSModules() as $value) {
             $ignores[] = "/" . $value["path"] ;//. "/";
         }
+        $ignores = array_unique($ignores);
         sort($ignores);
 
         $gi->setLines($ignores);
