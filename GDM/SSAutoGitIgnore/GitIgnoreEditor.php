@@ -155,11 +155,17 @@ class GitIgnoreEditor {
     /**
      * Save chanes to the .gitinore file
      *
-     * @throws type
+     * @throws AutoGitIgnoreSaveFailedException
      * @return self
      */
     public function save() {
         $this->CheckGitIgnore();
+        if (!empty($this->beforeLines) && trim(end($this->beforeLines))) {
+            array_push($this->beforeLines, '');
+        }
+        if (empty($this->afterLines) || trim(reset($this->afterLines))) {
+            array_unshift($this->afterLines, '');
+        }
         $this->readLines = array_merge($this->beforeLines, $this->autoLines, $this->afterLines);
         if (count($this->readLines)) {
             if (!file_put_contents($this->filePath, implode(PHP_EOL, $this->readLines))) {
